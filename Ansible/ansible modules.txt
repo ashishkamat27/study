@@ -1,0 +1,47 @@
+Ansible Modules
+
+they are the building blocks that makes automation.
+They provide different actions which can perform 
+consists of differnt tasks which you can execute on system.
+You can develop your own modules and upload on ansible community group
+Pre-requiste is something which can be executed and sending JSON back to Ansible.
+
+@@@@@@@@@@@@@@@@
+Fundamentals
+@@@@@@@@@@@@@@@
+They are used inside
+-plays
+-playbooks
+-Adhoc commannds
+
+Types of modules
+Core- supported by ansible
+Extras - created by external communities
+Depreceted - removed support, no longer available
+
+@@@@@@@@@@@@
+Module Docs
+@@@@@@@@@@@@
+command to use
+ansible doc 
+-l -- list the module
+-s playbook snippets
+<module-name>
+
+What you can do with module
+-Manage Servers
+- Deploy configiration
+- Configure ntwork equipment
+- Maintain Virtual Server
+- Manage DB and Tables
+- Deploy load-balancer configurations
+
+some module need root permission append them using --sudo option
+
+Syntax: Adhoc
+ansible <host> -i <inventory> -m module-name -a "<options>"
+
+Eg:
+ansible webservers -i inventory -m yum -a "name=httpd state=present" --sudo
+ansible webservers -i inventory -m service -a "name=httpd enabled=yes state=started" --sudo
+

@@ -1,0 +1,45 @@
+@@@@@@@@@@@@@@@@@@@@@@@
+ Major Docker components
+@@@@@@@@@@@@@@@@@@@@@@@
+
+see file system inside exited containers
+ls -l /var/lib/docker/aufs/diff/<id>
+
+restart exited container
+docker start <container-id>
+docker attach <container-id>
+
+1) Docker engines/Docker daemon
+is like a Shipping Yard
+2) Docker Images 
+like shipping manifests
+
+3) Docker containers
+like shipping containers
+
+Docker Engine
+application infrastructure manager
+standardization provided
+
+Docker Images
+Images are like shipping manifest contains instructions to launch container 
+docker run 
+pull and launch container
+docker pull
+ just pull the image
+docker pull -a image-name
+
+by default it will pull image with tag 
+Docker Container
+running instances of images 
+running linux instances
+they are lightweight linux instances
+
+Docker Hub
+Registry to store images 
+It is a repository management system for docker images
+
+
+
+
+

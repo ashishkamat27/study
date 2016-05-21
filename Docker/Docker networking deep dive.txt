@@ -1,0 +1,120 @@
+$$$$$$$$$$$$$$$$$$$$$$$$$
+Docker Networking deep dive
+$$$$$$$$$$$$$$$$$$$$$$$$$$$
+
+
+@@@@@@@@@@@@@@@@@@@@@@
+docker0 bridge
+@@@@@@@@@@@@@@@@@@@@@@
+
+-when docker daemon starts on docker host it creates docker0 interface
+- It is actually bridge/virtual switch between linux kernel and docker container 
+It passes packets from Docker host to docker container
+
+we can see bridge details just by use  of bridge-utils package available on ubuntu
+
+It will provide you bridge id
+STP details
+interfaces connected in case of clusters
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@
+Virtual Ethernet Interfaces
+@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+each new container will get 1 interface that gets attached to docker0 bridge automatically
+
+when we attach and get inside the container and check ip address there also we get eth0 as address in the subnet range of 172.17.0.*
+it will subnet mask from the available addresses and which is actually connects to docker0 interface
+by default we will have access of internet due to same
+
+
+It is manged by namespaces
+Inside Docker host as vethx and eth0 in case of docker container
+
+docker0 will act as an interface between them
+
+
+@@@@@@@@@@@@@@@@@@@@@
+Network configuration files
+@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+!!!!!
+each container have following files as 
+-config.json
+-resolv.conf
+-hosts
+-hostname
+-hostconfig.json
+
+docker inspect <container-id> will provide whole configuration file 
+Inside that there is a section called 
+NetworkSettings
+It will provide
+
+Bridge : docker0 same as docker host 
+Gateway: <address> used for tunneling
+Ip-address
+Mac-address
+Ports exposed if any
+
+inside /var/lib/docker/<complete-container-id> following things are present
+
+cofig.json --> file we see after hitting docker inspect <container-id>
+hosts --> ipv4 and ipv6 addresses
+
+reslov.conf --> contains information about nameservers and search query
+by default it is straight copy of resolv.conf from docker hosts
+
+we can override default dns and network inf
+docker run --dns=<ip>
+
+@@@@@@@@@@@@@@@@@@@
+Expose and view Ports
+@@@@@@@@@@@@@@@@@@@@@@@
+Inside Dockerfile
+
+-EXPOSRE <port no>
+while run -p 
+-<host_port>:<container_port>
+map host port with given container port
+
+ View ports
+docker port <container-name/id>
+will give you container port -> host port
+tcp is by deafult for both case
+it can be overridden with specifying nw protocol at the end
+by default for all IPV4 addresses it is selected
+it can be changed by explicity specifying ip address of host
+eg
+
+docker run -d -p <ip>:<host_port>:<container_port>/<prtocol> 
+
+
+-P switch
+map all exposed ports written in Dockerfile to any random ports of docker host
+
+
+IMP!!!!!!
+@@@@@@@@@@@@@@@@@@@@@@@@@@@
+Linking containers
+@@@@@@@@@@@@@@@@@@@@@@@@@@@
+--link option used
+
+syntax
+docker run --name=<name-of-self> --link=<source_container_name>:aliase <mode> <name_of_image_self> <entry-point>
+
+to connect two or more containers with each other 
+--name is essential because it is done using name provided
+
+all environment variables are exposed and availble for container we linked with including ip-address
+
+
+--Advanced
+we need to write docker-compose file
+for same
+
+---plugins availble
+swarm
+compose
+
+

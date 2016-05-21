@@ -1,0 +1,38 @@
+#####################
+Inventory file
+####################
+-It is a component which feeds your plays
+-Its much more than just a simple lookup table, which defines and describes environement
+-It can be stored anywhere in the system provided you specfied the correct path.
+- You can have one single file or multiple files containing different environement configuration 
+
+####################
+Features
+####################
+A] Behavioral Parameters
+contains configuration of a system or even a group of systems. SSH users and passwords, key files
+system path of executables
+B] Groups
+C] Groups of groups
+Eg Data-center-west all test server, all PROD server
+-Can have hierarahy of a groups
+- can assign variables to a group
+Eg NTP Server or syslog server
+D] Assign variables inside a file
+E] Scaling out using mutiple files
+F] Static/Dynamic
+
+Example 
+[webserver]
+web1.company.com ansible_ssh_user=abc ansible_ssh_pass=123
+web2.company.com ansible_python_interpreter=/usr/bin/python
+
+[datacenter-west:children]
+webserver
+//Here datacenter-west is a group and webserver is the children of that group, if you dont specify it as chidren ansible will look it group within group, and since it cant find anything will throw an error
+
+//Creation of variables
+[datacenter-west:vars]
+ansible_ssh_user=ansible_user
+ansible_ssh_pass=**********
+ntp-server=IP-Gateway

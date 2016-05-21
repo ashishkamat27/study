@@ -1,0 +1,18 @@
+Architecture
+
+Components are
+Inventory -Host file which maps hosts and contains variable to the hosts
+Modules -package to be installed or deployed on remote server.Ea
+Playbook- contains plays and logic of configuration to host server. coordinate multiple tasks to work with. YAML file
+configuration file- contains system related configuration.has inheritance support 
+
+then using python support to build the execution 
+and SSH to Remote Server to do the job ie delivering playbook package
+
+@@@@@@@@@@@@@@@@
+Types of executions
+@@@@@@@@@@@@@@@@
+Remote via ssh (default)
+Local copy playbook and run locally on remote server itself.
+
+

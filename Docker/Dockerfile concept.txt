@@ -1,0 +1,36 @@
+@@@@@Solaman Hyke the ceo of Docker Inc@@@@@
+Dockerfile
+- Plain text
+- Simple format
+- Instructions to build Image
+- top to bottom left to right
+- Run docker build command to build an image from a Dockerfile
+A]Creation of Dockerfile
+Standard practice is to USE uppercase for instrcutions
+Adding commnent
+# will add comment
+1) FROM the base image to start with
+2) MAINTAINER who is developing this Docker file
+3) RUN what to do, run commands especially installation of package
+every RUN command adds  new layer on top of that and commits that layer for that
+4) CMD [] command to execute command while running state of conatainer.
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@
+How to verify?
+@@@@@@@@@@@@@@@@@@@@@@@@@@
+docker images --tree
+will show you  images and tree 
+
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+Building image from docker file
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+docke build -t="name_to-given:<version>" <path of Dockerfile>
+
+-for each command it adds a new layer and commit that layer in a temporary container 
+-and if success it removes intermediate container
+ -once all done it will create image with new id
+-for each build done from Dockerfile -and if version is not mentioned it will override the previous image and all the layers formed will be used from build cache for second time onwards provided those image layers exists.
+
+
+

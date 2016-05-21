@@ -1,0 +1,44 @@
+//Scaling out Inventory file
+
+Using Directories
+
+can use to break-out-long-running inventory files
+Very useful when dealing with large environments
+
+Basic Directory structure
+|------group_vars
+|	|---all
+	|---db
+|-------host_vars
+	|_web1
+|-------inventory_prod
+|_______inventory_test
+
+Multi-Environment
+
+|-------production
+|------group_vars
+|	|---all
+	|---db
+|-------host_vars
+	|_web1
+	|____inventory_prod
+|_______test
+   |------group_vars
+   |	|---all
+	|---db
+   |----host_vars
+	  |_web1
+	  |____inventory_test
+   |_______test
+
+Order of operation
+1) Group_vars all
+2) Group_vars groupname
+3) Host_vars Hostname
+
+Variable files are written in YAML
+Comments in YAML using #
+
+ansible webservers -i inventory_prod -m user -a "name={{username}} password=***** --sudo 
+

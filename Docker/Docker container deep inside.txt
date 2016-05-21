@@ -1,0 +1,116 @@
+Docker Container
+
+when we launch container docker engine reads the image and any metadata and builds the container by stacking the layers and it starts then as instructions with help of metadata 
+
+A] Thin writable layer
+
+-Each and every container gets its own thin writabble layer which seats on top of read only layers of image by which container starts
+-It is unique for each container.
+- where read only image layers are sharable by multiple containers
+#############################
+What that thin writable layer contains
+####################################
+-runtime instructions
+- configurations needed for starting and running containers
+- metadata
+the place where all containers state is stored
+-It only consume space when we made changes inside container 
+- It is very light weight and space efficient
+
+-rootfs of a container is never made writable
+- it is alaways a bottom layer of any container and always protected and read only
+- but due to upper thin writable layer for each container we get look and feel that we are modifying rootfs files but fact is different
+- It is possible due to union mount concept
+
+
+@@@@@@
+IMP
+@@@@@@@
+-all containers are single system that  shared the kernle of host on which docker engine relies
+- boot is also different
+they got linux runtime environment to run
+B] One Process per container
+
+Container is basically single process application good for web apps and micro service architecture
+
+docker top command tells all running processes inside container
+
+@@@
+Commands to work with containers
+@@@@@@@@@@@
+docker run --cpu-shares=256
+docker run memory=1g
+docker inspect <container-id>
+will provide metadata of container such as Ip address, Bridge Volumes,Exposed ports, etc.
+
+
+ 
+C] Container Management
+Each container has its own network ,sandbox filesystem, process tree,
+start|stop|restart are commands by which we can manage lifecycle of container
+
+docker stop sends SIGTERM signal to process of id 1 which receives the signal causes standard 
+docker container terminates when process id 1 receives the signal to terminate
+
+
+docker kill vs stop
+kill-s <SIGTERM> sig kill running with PID 1.
+docker start <container-id> 
+
+Ctrl + P +Q will give you terminal back without exiting container
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+Restart the exited container
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+docker start <container-id>
+docker attach <same container-id> container that is in detached mode will get attached with PID 1
+docker ps -l
+ will give you last exited container status
+
+@@@@@@@@@@@@@@@@@@@@@@@@@
+PID 1 and containers
+@@@@@@@@@@@@@@@@@@@@@@@@@
+pid 1 in the container is the process that is specified while running docker run command and giving /bin/bash will actually call init process with SIGTERM signals
+PID1 is always the first process for any linux machine or container in our case 
+it manages and take care of other processes.
+init is first process and other processes are forked from them.
+
+docker attach will attach PID1 inside the container
+@@@@@@@@@@@@@@@@@@@@@@@
+inside of containers
+@@@@@@@@@@@@@@@@@@@@@@@
+
+docker top <container-id> will give all list of processes running inside of container
+docker inspect <container-id> will give all configuration in json format
+
+Whre is the container information/data is stored
+/var/lib/docker/containers/<complete-id>
+
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+Getting shell access inside a container
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+nsenter
+
+shell is not always PID1 for containers docker attach is not the best way to do that
+nsenter will allow to enter namespace but it requires PID of the container
+
+How do I get access?
+docker inspect <container-id>|grep Pid
+way 1
+nsenter -m -u -n -p -i -t 8197
+
+-m mount namespace
+-u utils namespace
+-n nw namespace
+-p process namespace
+-i ipc namespac
+-t target
+
+
+
+way 2
+docker-enter <container-id>
+in both cases docker container never exit

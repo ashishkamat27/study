@@ -1,0 +1,64 @@
+Troubleshooting and Best practicies
+
+@@@@@@@@@@@@@@@@@@@@
+Docker daemon logging
+@@@@@@@@@@@@@@@@@@@
+
+modes available
+-debug 
+-info
+-error
+- fatal
+docker -d -l <mode> &
+-d -- daemon
+-l log it
+/var/log/sys.log
+
+to a file
+docker -d >> <file> 2>&1
+We can specify which default log level to be used in
+/etc/default/docker
+and DOCKER_OPTS="--log-level=<mode>"
+
+@@@@@@@@@@@@@@@@@@@@@@
+Container logging
+@@@@@@@@@@@@@@@@@@@@@
+ 
+docker logs <container_name/id>
+
+-f dynamic update
+if container us volumes to share and persist data
+
+@@@@@@@@@@@@@@@@@@@@@@@@
+Image troubleshooting
+@@@@@@@@@@@@@@@@@@@@@@@
+first need to update package then install
+
+Intermediate images
+if it fails to create no name and tag will provided 
+and last succesful image layer/ Instruction id will be attached to it
+
+
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+Network troubleshooting
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+stop docker service
+docker0
+ip link del docker0
+DOCKER_OPTS=bip=<ip>
+start docker service
+once start it will start and all new container will get the ip we specified
+
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@
+Firewall config /IPtables
+@@@@@@@@@@@@@@@@@@@@@@@@@@
+both are true
+--icc inter container communication
+--iptables allow Docker to change iptables rule
+when we change it docker daemon adds DROP rule to iptables
+
+Iptables
+when false docker can not mess/modify with iptables rule
+ip address for containers are in sequential manner

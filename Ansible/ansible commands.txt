@@ -1,0 +1,10 @@
+Ansible handson
+
+inventory file
+<IP-address list>
+first command
+ansible <IP-address> -i inventory -u <username> -m <module-name> -k 
+where
+-i -inventoryfile
+-u -username
+-m -module 

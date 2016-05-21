@@ -1,0 +1,28 @@
+Working with Registeries
+
+Two tyeps of registeries exists in the case of Dockerhub
+1) public
+2) private
+by default when you sign in on docker hub it gives you 1 private repository to use.
+you can have multiple public repos for you
+
+first tag the image with
+docker tag <image_id> <tag-name> 
+then push to dockerhub
+using 
+docker push <image-name>:version
+
+pull image on another m/c using
+docker pull <image-name>:tag-name
+
+Private registeries
+
+On ubuntu
+inside 
+/etc/defaulut/docker
+ADD DOCKER_OPTS="--insecure-registry <registry-name>"
+export DOCKER_OPTS then
+on centos
+/usr/lib/systemd/system/docker.service
+ExecStart=/usr/bin/docker -d $OPTION $DOCKER_STORAGE_OPTIONS -insecure-registry <registry-name>"
+

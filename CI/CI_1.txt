@@ -1,0 +1,31 @@
+Continuous Integration
+
+Major Problem with Developers
+
+Hey It works on my machine!!!!
+
+Level of Code Confidence
+
+Does the code compile?
+Doe the code pass our tests?
+Does the code meet our buisiness requirements?
+Does the code meet our quality bars?
+
+CI as an Enabler
+
+- Automatically produce build artifacts
+- Easier staged deployment (DEV-TEST-PROD)
+-Automated deployment
+
+Benefits
+- Code in VCS works
+- Less time spent integrating
+- Increased visbility of progress
+- Reduced project risk
+- Reduced friction within project team
+- Increased autonomy of testers
+- Less time spent creating and deploying builds
+- Increased confidence of team and stakeholder
+- Side benefit
+ 
+

@@ -1,0 +1,9 @@
+Docker communication over nw
+
+check docker is listening on any port
+netstat -tlp
+docker -H <ipaddress> will convert local nw to server nw
+this is way you can separate out docker client and docker daemon
+on different machine
+export DOCKER_HOST="tcp://<IP>:2375"
+you need to bind socket

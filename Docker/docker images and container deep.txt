@@ -1,0 +1,76 @@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+Deep into Docker images and Containers
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+Images are build time constraints where Containers are runtime constraints
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+Part A]Docker Image
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+
+layering of images 
+Each layer consist one or more image
+We need a base image to kickstart
+on the top of that we can add other utilities inside it.
+Single images shared by multiple containers
+Each layer or image gets its unique id
+these ids are listed under docker image and store as a metadata
+metadata tells docker how to build image by specifying id
+when they combine form a single image where each upper layer hides data of its bottom layer
+This layeing is accomplished by "Union mounts", the ability to mount multiple file system into one layer ie  image
+
+##########
+Union mounts
+##########
+They combine all of the views into single image gives regular view of everyday file system.
+
+
+####bootfs and rootfs#####
+##########################
+both are file system bootfs is required to start and execute container
+rootfs for root reletated operations inside container
+bootfs tells how to start container same as booting machine
+
+#####################
+How Images are stored
+#####################
+Images are stored in layers 
+when you hit command "docker pull <image-name>" it downloads the dependent layers and then combined in one layer as a image using union mount
+
+It can be seen using
+docker images --tree 
+which gives visualization of layers for each image identified by layer-id
+
+and this layers for images are stored inside
+/var/lib/docker/aufs/layers/ in a hashcode format
+we can see its dependent layers as well
+
+ls -l /var/lib/docker/aufs/diff/<image-id> will give what the image contains
+
+!!!!!!!!
+docker history <name-of-image> 
+!!!!!!!!!!!!!
+
+will give you entire command history you fired while creating container 
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+Copy image of containers from one host to another using ssh
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+1) docker commit <container-id> name
+will create new image on
+
+2) docker save -o <location> name-of-image will save image in tar format (default)
+
+3) scp that tar file to machine you want
+4)docker load -i <location>  
+
+$$$$$$
+What that tar file contains
+$$$$$$$$$$
+dependent layers formation 
+
+Part B] Docker Containers
+
+
+
+

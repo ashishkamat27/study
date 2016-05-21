@@ -1,0 +1,28 @@
+Ansible playbook
+
+-most common way to execute automation workflow
+- bring together all your plays to orchestrate of process you are trying to execute
+- easy to use
+- powerful and extendible
+
+It is a kind of glue that bring everything altogether.
+
+maps Inventory
+maps hosts to tasks
+can have multiple tasks.
+can have multiple plays
+
+###############
+White space is crucial
+###############Eg:
+---
+- hosts: webservers
+  remote_user: root
+  tasks:
+  - name: Install Apache
+  - yum: name=httpd state=present
+  - name: Start Apache
+    service: name=httpd state=started
+
+
+

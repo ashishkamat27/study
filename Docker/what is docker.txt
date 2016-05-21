@@ -1,0 +1,34 @@
+What is docker - technology/platform
+Docker is a container runtime to a linux kernel 
+brings together 
+namesapce cgroups capabilities
+Packaged shipping implementation of wha
+Features
+-standard runtime
+provide environment to run
+we need engine to run
+-can be dropped anywhere where docker daemon runs.
+same as android
+-application portablity
+open source
+
+Evolving Docker platform
+Registry
+Clustering
+Orchestration
+Networking
+
+Docker is a company formerly known as dotcloud 
+docker is an internal project which is developed by Soloman Hykes
+
+#running on apache
+
+LXC vs Docker
+
+Docker used LXC as internal executiuon driver in previous days
+but it makes dependancy for them
+they write library called libcontainer by which they can access the OS
+later it becomes an internal part of Docker daemon
+but it is not default executor
+you can fire docker daemon and tell them to use LXC.
+

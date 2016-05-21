@@ -1,0 +1,145 @@
+Docker file deep dive
+
+@@@@@@@@@@@@
+Build cache
+@@@@@@@@@@
+when you build the new image
+docker daemon iterates through each instrctions and checks whether it is alredy executed or not
+docker daemon also checks whether layer is linked to any other and stores info as required.
+if yes it will get the metadata from build cache and execute that command for that layer
+
+Build cache is a space storage where it stores related metadata and instructions fired from Dockerfile and images from which docker container is created
+It saves bunch of time next time onwards by fetching data from cache.
+
+
+@@@@@@@@@@@@@@@@@@
+Layers and Dockerfile
+@@@@@@@@@@@@@@@@@@@
+
+Postmottom of Dockerfile
+
+FROM <image-name> ---> layer size 0 kb
+MAINTAINER <name> --> layer size 0kb
+RUN command ---> layer size depnds 
+CMD --> small size
+
+docker history <image-name> and docker images --tree work in reverse order
+bottom to top --> docker history
+when you see docker history <image-name> 
+
+#################
+Reducing no of layers
+##################
+Each Run command creates a new layer for which intermediate container is created and each layer consumes menmory 
+We can combine mutiple RUN instructions into single command thus reduces layers and memory consumption
+
+@@@@@@@@@@@@@@@@@@
+CMD Instruction
+@@@@@@@@@@@@@@@@@@
+
+only execute at run time
+only one CMD Instruction can be used in a Dockerfile
+-mostlly lat line
+CMD vs RUN
+CMD
+- run time
+- run during launch time of a container
+-
+equivalent of docker run <args> <command>
+
+RUN
+- build time
+- add layers to images
+- used to install apps
+
+Forms accepted
+Shell form 
+commands are expressed the same way as shell commands
+commands get prepared by "/bin/sh -c"
+variable expansion
+
+Exec form
+JSON array style
+["command","arg1"]
+-allow to execute commands inside container that dont have a shell
+-avoid string munging by shell
+- No shell feature
+- No variable expansion
+- No special character
+
+
+@@@@@@@@@@@@@@@@@
+ENTRYPOINT
+@@@@@@@@@@@@@@@@@@
+
+better and preferred way to use 
+no hard and fast rule
+CMD instructions cant be overridden at run-time wirh normal commands -
+docker run ...<command>
+any commands at run-time we specified will get intrpreted as an argument for ENTRYPOINT
+
+Eg ENTRYPINT ["echo"] which means echo all what you specified will get echoed
+
+then docker run <name> hello
+or docker run <name> /bin/bash
+will get echoed as it is
+
+
+
+Then whats the difference between CMD and ENTRYPOINT
+Docker has a default entrypoint which is /bin/sh -c but does not have a default command
+
+The command is run via the entrypoint. i.e., the actual thing that gets executed is /bin/sh -c bash. This allowed docker to implement RUN quickly by relying on the shell's parser. Later on, people asked to be able to customize this so ENTRYPOINT and -entrypoint has been introduced.
+
+When using the CMD instruction, it is exactly as if you were doing docker run -i -t ubuntu <cmd>. <cmd> will be the parameter of the entrypoint.
+
+One thing to note is that ENTRYPOINT can be changed to a binary and CMD can be the arguments you want to pass in to that command:
+
+###################
+CMD and ENTRYPOINT 
+##################
+
+As everything is passed to the entrypoint, you can have a very nice behavior from your images. When using ["/bin/cat"] as entrypoint and then doing docker run catimg /etc/passwd, you get it, /etc/passwd is the command and is passed to the entrypoint so the end result execution is simply /bin/cat /etc/passwd.
+
+For example, invoking nmap:
+ENTRYPOINT ["nmap", "-sS"]  
+CMD ["192.168.1.2", "192.168.1.5"] 
+
+
+
+@@@@@@@@@@@@@@@@@@@@@@@
+  ENV instruction
+@@@@@@@@@@@@@@@@@@@@@@@
+environments variables can be passed to docker container using ENV command
+
+Syntax:
+ENV var=value
+
+- need to use -e switch and key value pair 
+
+
+
+@@@@@@@@@@@@@@@@@@@@@@@
+Volumes and mounting
+@@@@@@@@@@@@@@@@@@@@@@@
+
+for data persisting in a host 
+both source and destination directory are always in sync
+
+-v is the flag to be used for same
+docker run -it/d -v <host_dir>:<container_dir> 
+copyinng volume-data from one container to another 
+we use --volume-from <container-id>
+
+We can also specify directory as in instruction
+VOLUME "<directory>"
+
+docker inspect <container-id> will give you details about volume-dir created 
+
+delete volume 
+docker rm -v <container-name/id>
+
+we can use  
+--volume drivers availalbe
+convoy
+gluster

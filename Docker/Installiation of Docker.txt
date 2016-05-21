@@ -1,0 +1,39 @@
+It follows Client server architecture model
+Installation of Docker
+Docker client
+Docker deaemon as a server 
+ are two major components
+when you install docker 
+client and daemon comes with them
+Client is one who  fires docker commands and request to server
+Docker daemon is actually a server who provides services like process management, control groups capabilitis
+
+
+On Ubuntu
+ docker.io is a package name
+ docker -v gives client version
+docker version gives both Client asnd Server Version with AP
+docker info 
+gives no of images and containers we have
+storage driver (different for different)
+aufs for ubuntu
+devicemapper for centos
+
+Root dir
+Kernel version 
+
+Updating docker
+add apt-key
+wget -qO - https://get.docker.com/gpg |apt-key add -
+echo deb http://get.docker.com/ubuntu docker main > /etc/apt/sources.list.d/docker.list
+
+--------------------
+Granting docker access to non-root users
+----------------------------
+cat /etc/group
+gpasswd -a <username> docker
+logout
+login again
+Bingo!!
+
+

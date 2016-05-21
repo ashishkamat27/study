@@ -1,0 +1,24 @@
+Ansible configuration file
+It actually defines how ansible works
+
+order of precendence
+1) Environement variable called $ANSIBLE_CONFIG
+2) ./ansible.cfg --curent directory
+3) Home directory ~/.ansible.cfg
+4) /etc/ansible/ansible.cfg --global cofig file (It is already created )
+
+Configuration files are not merged. First one wins
+##################
+Over ridding config file
+###################
+
+$ANSIBLE_<configsetting>
+Override specific setting by prefix ANSIBLE_to the name
+
+#export ANSIBLE_FORKS=10
+forks -- Total number of parallel operation ansible can execute
+default is 5
+20 is production recommended
+
+
+Different options available

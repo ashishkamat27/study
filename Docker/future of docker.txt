@@ -1,0 +1,5 @@
+Future of Docker
+Docker on windows m/c using boot2docker
+
+Each container share host kernel 
+thus container developed using windows kernel cannot run on linux machine and vice versa

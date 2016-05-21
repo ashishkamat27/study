@@ -1,0 +1,110 @@
+Ansible
+IT automation tool
+Application Deployment
+Configuration management tool
+Multi-tier orechestration
+Load balanacer 
+
+@@@@@@@@@@@@@@@@@@@@@@@
+Many feature
+@@@@@@@@@@@@@@@@@@@@@@@@@
+-No agent
+-only ssh
+-confguration file as data and not code
+-Batteries included
+- Full configuration management,
+orchestration 
+-playbooks have to write
+
+
+@@@@@@@@@@@@@@@@@@@@@
+Ansible basics
+@@@@@@@@@@@@@@@@@@@@@
+
+Example
+Simple playbook
+--
+- name: install and start apache
+  hosts: webservers
+  user: root
+
+  tasks:
+  -name: install httpd
+  yum: name=httpd state=present
+  -name: start
+   service: name= httpd state= running
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+Installation and Configuration
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+-From OS packagr
+-From Git
+-From pip
+
+Run in two modes
+- Adhoc (by use of ansible commands)
+- Playbook (all yml files)
+
+Eg: Adhoc
+ansible -m ping -u vagrant all
+will give results in JSON format
+
+Eg: using playbook -e "uservar=vagrant"
+ansible-playbook basic-playbook-1.yml
+will read ansible commands from playbook and do the stuff.
+It starts gathering facts
+and run tasks in sequential manner.
+It will notify status of each command with proper messages.
+
+@@@@@@@@@@@@@@@@@@@@@@@@@
+Host Inventory basic
+@@@@@@@@@@@@@@@@@@@@@@@@@
+contains list of hosts
+can be organized into different groups 
+like web host db hosts
+ overriding of paramaeters is also easy
+Eg 
+You can 
+-provide range of IP adress or specific host to run
+- can override non standard SSH ports ,db ports you may connect to
+- set variables that set IP adress
+- override DNS for SSH tunnel
+- Can have groups of groups child groups
+
+
+@@@@@@@@@@@@@@@@@@@@@@
+Inventory plugins
+@@@@@@@@@@@@@@@@@@@@@
+Cloud: Racksapce, EC2, GCE
+Bare metal
+Custom
+
+@@@@@@@@@@@@@@@@@@@@@@@@@
+Connection types
+@@@@@@@@@@@@@@@@@@@@@@@@
+paramiko (Python SSH)
+ssh (OpenSSH)
+local 
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+Ansible core concepts
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+-Playbooks
+-Plays
+-Tasks and handlers
+-Modules
+-Variables
+
+ Playbooks
+	- Plays
+	  - Tasks
+	    - Modules(Tasks call them).
+	   - Handlers (triggered by )
+
+Everything is se
+
+
+
+
+

@@ -1,0 +1,40 @@
+docker 
+Isolated sytem view
+-own root file system for each
+-own view of different file sytem
+-create process for each container
+ -process inside one connot send signal to another
+-have own routing table and nw mangement
+-manged by linux kernel namespace
+divided into 
+a pid namespace
+b net namespace
+c mnt namespace
+d user namespace
+------------
+Control groups
+------------- 
+nice to have with namespace
+group together with process 
+aquire to kernel namespace
+mange cpu resource memory work io and other stuff for each container inside it. 
+have style workload
+increasing/decreasing cgroup limit manages other stuff 
+they help us to ensure that man
+
+-----------------
+Capabilities
+----------------- 
+priviledges about what process can get
+grant and revoke different access
+take all priviledges root user have and break them into multipe capablities group as privildges
+Those are
+CAP_AUDIT_COTROL
+CAP_CHOWN
+CAP_DAC_OVERRIDE
+and so many
+should be used when you want to grant some prividges to non root user not all.
+Eg to bind a socket to nw
+CAP_NET_BIND_SERVICE
+
+
